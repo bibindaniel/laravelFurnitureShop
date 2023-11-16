@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <h1>Add Product</h1>
 
-    <form action="{{ route('store') }}" method="post">
+    <form action="{{ route('store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
@@ -20,11 +20,13 @@
             <label for="product_code" class="form-label">Product Code</label>
             <input type="text" class="form-control" id="product_code" name="product_code" required>
         </div>
-
-
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+        </div>
+        <div class="form-group mb-3">
+            <label for="image">Image</label>
+            <input type="file" class="form-control" id="image" name="image">
         </div>
 
         <button type="submit" class="btn btn-primary">Add Product</button>

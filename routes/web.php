@@ -27,8 +27,34 @@ Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('showLoginForm');
 Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::post('/create-post', [PostController::class, 'Create_post'])->name('CreatePost');
-Route::get('/main', [UserController::class, 'mainPage'])->name('mainPage');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+Route::post('/contact', [UserController::class, 'submitContactForm'])->name('submitContactForm');
+Route::post('/blog', [UserController::class, 'submitBlogForm'])->name('submitBlogForm');
+
+Route::get('/paymentsuccess', function () {
+    return view('paymentsuccess');
+});
+Route::get('/shop', function () {
+    $product = Product::all();
+    return view('shop')->with('item', $product);
+})->name('shop');
+Route::get('/main', function () {
+    $product = Product::take(3)->get();
+    return view('main')->with('item', $product);
+})->name('main');
+Route::get('/about', function () {
+    return view('about');
+});
+Route::get('/services', function () {
+    $product = Product::take(3)->get();
+    return view('services')->with('item', $product);
+});
+Route::get('/contact', function () {
+    return view('contact');
+});
+Route::get('/blog', function () {
+    return view('blog');
+});
 
 
 
@@ -47,3 +73,4 @@ Route::get('/admin.products', function () {
 Route::get('/admin.edit/{id}', [ProductController::class, 'edit'])->name('edit');
 Route::delete('/admin.delete/{id}', [ProductController::class, 'destroy'])->name('delete');
 
+Route::post('/shop', [UserController::class, 'store'])->name('razorpay.payment.store');

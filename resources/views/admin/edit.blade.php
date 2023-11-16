@@ -12,7 +12,7 @@
                 </div>
                 <div class="row tm-edit-product-row">
                     <div class="col-md-6">
-                        <form action="{{ route('update', $product->id) }}" method="POST" class="tm-edit-product-form">
+                        <form action="{{ route('update', $product->id) }}" method="POST" enctype="multipart/form-data" class="tm-edit-product-form">
                             @csrf
                             @method('PUT')
 
@@ -32,7 +32,10 @@
                                 <label for="description">Description</label>
                                 <textarea id="description" name="description" class="form-control validate tm-small" rows="5" required>{{ $product->description }}</textarea>
                             </div>
-                            <!-- Other fields, if needed -->
+                            <div class="form-group mb-3">
+                                <label for="image">Change Image (leave blank to keep the current image)</label>
+                                <input type="file" class="form-control" id="image" name="image">
+                            </div>
                             <button type="submit" class="btn btn-primary btn-block text-uppercase">Update Now</button>
                         </form>
                     </div>

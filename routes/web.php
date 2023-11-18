@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
+use App\Models\Blog;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +31,8 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::post('/create-post', [PostController::class, 'Create_post'])->name('CreatePost');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/contact', [UserController::class, 'submitContactForm'])->name('submitContactForm');
-Route::post('/blog', [UserController::class, 'submitBlogForm'])->name('submitBlogForm');
+Route::post('/blog', [BlogController::class, 'submitBlogForm'])->name('submitBlogForm');
+Route::post('/shop', [UserController::class, 'store'])->name('razorpay.payment.store');
 
 Route::get('/paymentsuccess', function () {
     return view('paymentsuccess');
@@ -39,8 +42,13 @@ Route::get('/shop', function () {
     return view('shop')->with('item', $product);
 })->name('shop');
 Route::get('/main', function () {
-    $product = Product::take(3)->get();
-    return view('main')->with('item', $product);
+    $recentBlogs = Blog::orderBy('created_at', 'desc')->take(3)->get();
+    $recentProducts = Product::take(3)->get();
+
+    return view('main')->with([
+        'blogs' => $recentBlogs,
+        'products' => $recentProducts,
+    ]);
 })->name('main');
 Route::get('/about', function () {
     return view('about');
@@ -52,9 +60,8 @@ Route::get('/services', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
-Route::get('/blog', function () {
-    return view('blog');
-});
+
+
 
 
 
@@ -73,4 +80,18 @@ Route::get('/admin.products', function () {
 Route::get('/admin.edit/{id}', [ProductController::class, 'edit'])->name('edit');
 Route::delete('/admin.delete/{id}', [ProductController::class, 'destroy'])->name('delete');
 
-Route::post('/shop', [UserController::class, 'store'])->name('razorpay.payment.store');
+
+
+
+// Route::get('/blog/{id}/edit', 'BlogController@edit')->name('blog.edit');
+Route::get('/editblog/{id}', [BlogController::class, 'edit'])->name('blog.edit');
+Route::get('/blog', function () {
+    $blog = Blog::all();
+    return view('blog')->with('item', $blog);
+});
+Route::get('/detailedblog/{id}', function ($id) {
+    $blog = Blog::find($id);
+    return view('detailedblog')->with('blog', $blog);
+})->name('detailedblog');
+Route::put('/editblog/{id}', [BlogController::class, 'update'])->name('blog.update');
+Route::delete('/editblog/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');

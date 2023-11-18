@@ -75,6 +75,10 @@
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
+                    @elseif(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
                     @endif
                     <form action="{{ route('submitContactForm') }}" method="post">
                         @csrf
@@ -94,12 +98,12 @@
                         </div>
                         <div class="form-group">
                             <label class="text-black" for="email">Email address</label>
-                            <input type="email" class="form-control" id="email">
+                            <input type="email" class="form-control" id="email"  name="email">
                         </div>
 
                         <div class="form-group mb-5">
                             <label class="text-black" for="message">Message</label>
-                            <textarea name="" class="form-control" id="message" cols="30" rows="5"></textarea>
+                            <textarea name="message" class="form-control" id="message" cols="30" rows="5"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary-hover-outline">Send Message</button>

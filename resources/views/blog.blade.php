@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('body')
+<!-- Include CKEditor from CDN -->
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+
 <!-- Start Hero Section -->
 <div class="hero">
     <div class="container">
@@ -28,160 +31,72 @@
 <div class="blog-section">
     <div class="container">
         <div class="row">
+            @if(isset($item) && $item->count() > 0)
+            @foreach($item as $rs)
             <div class="col-12 col-sm-6 col-md-4 mb-5">
                 <div class="post-entry">
-                    <a href="#" class="post-thumbnail"><img src="images/post-1.jpg" alt="Image" class="img-fluid"></a>
+                    <a href="{{ route('detailedblog', ['id' => $rs->id]) }}" class="post-thumbnail"><img src="{{ asset('storage/' . $rs->image) }}" alt="Image" class="img-fluid"></a>
                     <div class="post-content-entry">
-                        <h3><a href="#">First Time Home Owner Ideas</a></h3>
+                        <h3><a href="#">{{ $rs->title}}</a></h3>
                         <div class="meta">
-                            <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 19, 2021</a></span>
+                            <span>by <a href="#">{{ $rs->name}}</a></span> <span>on <a href="#">{{ $rs->updated_at}}</a></span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-12 col-sm-6 col-md-4 mb-5">
-                <div class="post-entry">
-                    <a href="#" class="post-thumbnail"><img src="images/post-2.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content-entry">
-                        <h3><a href="#">How To Keep Your Furniture Clean</a></h3>
-                        <div class="meta">
-                            <span>by <a href="#">Robert Fox</a></span> <span>on <a href="#">Dec 15, 2021</a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4 mb-5">
-                <div class="post-entry">
-                    <a href="#" class="post-thumbnail"><img src="images/post-3.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content-entry">
-                        <h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
-                        <div class="meta">
-                            <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 12, 2021</a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4 mb-5">
-                <div class="post-entry">
-                    <a href="#" class="post-thumbnail"><img src="images/post-1.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content-entry">
-                        <h3><a href="#">First Time Home Owner Ideas</a></h3>
-                        <div class="meta">
-                            <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 19, 2021</a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4 mb-5">
-                <div class="post-entry">
-                    <a href="#" class="post-thumbnail"><img src="images/post-2.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content-entry">
-                        <h3><a href="#">How To Keep Your Furniture Clean</a></h3>
-                        <div class="meta">
-                            <span>by <a href="#">Robert Fox</a></span> <span>on <a href="#">Dec 15, 2021</a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4 mb-5">
-                <div class="post-entry">
-                    <a href="#" class="post-thumbnail"><img src="images/post-3.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content-entry">
-                        <h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
-                        <div class="meta">
-                            <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 12, 2021</a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4 mb-5">
-                <div class="post-entry">
-                    <a href="#" class="post-thumbnail"><img src="images/post-1.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content-entry">
-                        <h3><a href="#">First Time Home Owner Ideas</a></h3>
-                        <div class="meta">
-                            <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 19, 2021</a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4 mb-5">
-                <div class="post-entry">
-                    <a href="#" class="post-thumbnail"><img src="images/post-2.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content-entry">
-                        <h3><a href="#">How To Keep Your Furniture Clean</a></h3>
-                        <div class="meta">
-                            <span>by <a href="#">Robert Fox</a></span> <span>on <a href="#">Dec 15, 2021</a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4 mb-5">
-                <div class="post-entry">
-                    <a href="#" class="post-thumbnail"><img src="images/post-3.jpg" alt="Image" class="img-fluid"></a>
-                    <div class="post-content-entry">
-                        <h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
-                        <div class="meta">
-                            <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 12, 2021</a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+            @endif
 
         </div>
     </div>
 </div>
 <!-- Start Blog Section -->
 <!-- <div class="blog-section"> -->
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <!-- Add a section for creating a new blog -->
-                <div class="post-entry">
-                    <h3 class="text-center mb-4">Create a New Blog</h3>
-
-                    <!-- Blog Creation Form -->
-                    <form action="{{ route('submitBlogForm') }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label class="text-black" for="title">Title</label>
-                                    <input type="text" class="form-control" id="title" name="title">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label class="text-black" for="name">Your Name</label>
-                                    <input type="text" class="form-control" id="Name">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-black" for="image">Image</label>
-                            <input type="file" class="form-control" id="image" name="image">
-                        </div>
-
-                        <div class="form-group mb-5">
-                            <label class="text-black" for="content">Content</label>
-                            <textarea name="" class="form-control" id="content" name="content" cols="30" rows="5"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary-hover-outline">Submit</button>
-                    </form>
-                    <!-- End Blog Creation Form -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Add a section for creating a new blog -->
+            <div class="post-entry">
+                <h3 class="text-center mb-4">Create a New Blog</h3>
+                @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
                 </div>
+                @elseif(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+                @endif
+                <!-- Blog Creation Form -->
+                <form action="{{ route('submitBlogForm') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-black" for="title">Title</label>
+                                <input type="text" class="form-control" id="title" name="title">
+                            </div>
+                        </div>
+                            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-black" for="image">Image</label>
+                                <input type="file" class="form-control" id="image" name="image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label class="text-black" for="content">Content</label>
+                        <textarea name="content" class="form-control ckeditor" id="content" cols="30" rows="5"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary-hover-outline">Submit</button>
+                </form>
+                <!-- End Blog Creation Form -->
             </div>
         </div>
     </div>
+</div>
 <!-- </div> -->
 <!-- End Blog Section -->
 
@@ -284,5 +199,12 @@
         </div>
     </div>
 </div>
+<script>
+    CKEDITOR.replace('content', {
+        entities: false,
+        basicEntities: false
+    });
+</script>
+
 <!-- End Testimonial Slider -->
 @endsection

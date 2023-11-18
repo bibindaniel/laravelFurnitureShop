@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('name');
             $table->text('content');
             $table->string('image')->nullable();
+            $table->unsignedBigInteger('user_id'); // Add this line for the foreign key
             $table->timestamps();
+    
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+    
     }
     
 

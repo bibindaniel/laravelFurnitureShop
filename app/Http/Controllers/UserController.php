@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\ContactMessage;
-use App\Models\Blog;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +14,7 @@ use App\Models\Product;
 use Razorpay\Api\Api;
 use Exception;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\QueryException;
 
 
 class UserController extends Controller
@@ -65,7 +65,7 @@ class UserController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Invalid email or password',
         ]);
     }
     public function mainPage()
@@ -102,41 +102,32 @@ class UserController extends Controller
     {
         return view('admin.products');
     }
+
     public function submitContactForm(Request $request)
     {
-        // Validate the request
-        $validatedData = $request->validate([
-            'fname' => 'required',
-            'lname' => 'required',
-            'email' => 'required|email',
-            'message' => 'required',
-        ]);
+        try {
+            // Validate the request
+            $validatedData = $request->validate([
+                'fname' => 'required',
+                'lname' => 'required',
+                'email' => 'required|email',
+                'message' => 'required',
+            ]);
 
-        // Store the message in the database
-        ContactMessage::create($validatedData);
+            // Store the message in the database
+            ContactMessage::create($validatedData);
 
-        return back()->with('success', 'Message submitted successfully!');
+            return back()->with('success', 'Message submitted successfully!');
+        } catch (QueryException $e) {
+            // Handle database insertion error
+            $errorMessage = 'Error storing the message in the database: ' . $e->getMessage();
+            return back()->with('error', $errorMessage)->withInput();
+        }
     }
-    public function submitBlogForm(Request $request)
-    {
-        $validatedData = $request->validate([
-            'title' => 'required',
-            'name' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'content' => 'required',
-        ]);
 
-        $imagePath = $request->file('image')->store('blog_images', 'public');
 
-        Blog::create([
-            'title' => $validatedData['title'],
-            'name' => $validatedData['name'],
-            'image' => $imagePath,
-            'content' => $validatedData['content'],
-        ]);
 
-        return back()->with('success', 'Blog submitted successfully!');
-    }
+
     public function store(Request $request)
     {
         $input = $request->all();

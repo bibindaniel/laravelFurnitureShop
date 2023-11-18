@@ -38,26 +38,25 @@
 			<!-- End Column 1 -->
 
 			<!-- Start Column 2 -->
-			@if(isset($item) && $item->count() > 0)
-            @foreach($item as $rs)
-			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-				<a class="product-item" href="/shop">
-					<img src="{{ asset('storage/' . $rs->image) }}" class="img-fluid product-thumbnail">
-					<h3 class="product-title">{{ $rs->title }}</h3>
-					<strong class="product-price">{{ $rs->price }}</strong>
+			@if(isset($products) && $products->count() > 0)
+                @foreach($products as $product)
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="/shop">
+                            <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid product-thumbnail" alt="Product Image">
+                            <h3 class="product-title">{{ $product->title }}</h3>
+                            <strong class="product-price">{{ $product->price }}</strong>
 
-					<span class="icon-cross">
-						<img src="images/cross.svg" class="img-fluid">
-					</span>
-				</a>
-			</div>
-			@endforeach
+                            <span class="icon-cross">
+                                <img src="images/cross.svg" class="img-fluid">
+                            </span>
+                        </a>
+                    </div>
+                @endforeach
             @else
-            <tr>
-                <td class="text-center" colspan="5">Product not found</td>
-            </tr>
+                <div class="col-12 text-center">
+                    <p>Products not found</p>
+                </div>
             @endif
-			<!-- End Column 2 -->
 		</div>
 	</div>
 </div>
@@ -310,50 +309,32 @@
 				<h2 class="section-title">Recent Blog</h2>
 			</div>
 			<div class="col-md-6 text-start text-md-end">
-				<a href="#" class="more">View All Posts</a>
+				<a href="/blog" class="more">View All Posts</a>
 			</div>
 		</div>
 
 		<div class="row">
 
-			<div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
-				<div class="post-entry">
-					<a href="#" class="post-thumbnail"><img src="images/post-1.jpg" alt="Image" class="img-fluid"></a>
-					<div class="post-content-entry">
-						<h3><a href="#">First Time Home Owner Ideas</a></h3>
-						<div class="meta">
-							<span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 19, 2021</a></span>
-						</div>
-					</div>
-				</div>
-			</div>
+		@if(isset($blogs) && $blogs->count() > 0)
+                @foreach($blogs as $blog)
+                    <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                        <div class="post-entry">
+                            <a href="{{ route('detailedblog', ['id' => $blog->id]) }}" class="post-thumbnail"><img src="{{ asset('storage/' . $blog->image) }}" alt="Image" class="img-fluid"></a>
+                            <div class="post-content-entry">
+                                <h3><a href="#">{{ $blog->title }}</a></h3>
+                                <div class="meta">
+                                    <span>by <a href="#">{{ $blog->author }}</a></span> <span>on <a href="#">{{ $blog->created_at->format('M d, Y') }}</a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div class="col-12 text-center">
+                    <p>Blogs not found</p>
+                </div>
+            @endif
 
-			<div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
-				<div class="post-entry">
-					<a href="#" class="post-thumbnail"><img src="images/post-2.jpg" alt="Image" class="img-fluid"></a>
-					<div class="post-content-entry">
-						<h3><a href="#">How To Keep Your Furniture Clean</a></h3>
-						<div class="meta">
-							<span>by <a href="#">Robert Fox</a></span> <span>on <a href="#">Dec 15, 2021</a></span>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
-				<div class="post-entry">
-					<a href="#" class="post-thumbnail"><img src="images/post-3.jpg" alt="Image" class="img-fluid"></a>
-					<div class="post-content-entry">
-						<h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
-						<div class="meta">
-							<span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 12, 2021</a></span>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
 </div>
 <!-- End Blog Section -->
 

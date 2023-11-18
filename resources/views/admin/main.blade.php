@@ -34,7 +34,7 @@
                 <div class="card text-white bg-info mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Monthly Revenue</h5>
-                        <p class="card-text">$25,000</p>
+                        <p class="card-text">25,000</p>
                     </div>
                 </div>
             </div>
